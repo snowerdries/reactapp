@@ -1,0 +1,8 @@
+{
+  "extends": "react",
+  // Your overrides... 
+  "globals": {
+    "it": true,
+    "document": true
+  }
+}
