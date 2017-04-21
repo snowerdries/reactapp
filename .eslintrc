@@ -3,6 +3,7 @@
   // Your overrides... 
   "globals": {
     "it": true,
-    "document": true
+    "document": true,
+    "google": true
   }
 }
