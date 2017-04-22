@@ -9,16 +9,40 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 class App extends Component {
 
     componentDidMount () {
+        this.home = new google.maps.LatLng(51.139116, 4.542925);
+        this.work = new google.maps.LatLng(51.147526, 4.436579);
         this.map = this.createMap();
+        this.addTrafficLayer();
+        this.addMarkers();
     }
 
     createMap () {
-        var antwerp = { lat: 51.2167, lng: 4.4167 };
         const mapOptions = {
-            zoom: 10,
-            center: antwerp
+            zoom: 12,
+            center: this.home
         };
         return new google.maps.Map(this.refs.mapCanvas, mapOptions);
+    }
+
+    addTrafficLayer () {
+        var trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(this.map);
+    }
+
+    addMarkers () {
+        this.homeMarker = new google.maps.Marker({
+            position: this.home,
+            title: 'Thuis',
+            label: 'T'
+        });
+        this.homeMarker.setMap(this.map);
+
+        this.workMarker = new google.maps.Marker({
+            position: this.work,
+            title: 'Werk',
+            label: 'W'
+        });
+        this.workMarker.setMap(this.map);
     }
 
     render () {
