@@ -8,6 +8,11 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 class App extends Component {
 
+    constructor (props) {
+        super(props);
+        this.state = { value: 1 };
+    }
+
     componentDidMount () {
         this.home = new google.maps.LatLng(51.139116, 4.542925);
         this.work = new google.maps.LatLng(51.147526, 4.436579);
@@ -53,26 +58,66 @@ class App extends Component {
         const routeRequest = {
             origin: this.home,
             destination: this.work,
-            travelMode: 'DRIVING'
+            travelMode: 'DRIVING',
+            provideRouteAlternatives: true
         };
         const self = this;
         this.directionsService.route(routeRequest, function routeCalculated (result, status) {
             if (status === 'OK') {
-                self.directionsDisplay.setDirections(result);
+                self.setState({ routeInfo: result.routes[0], routeCalculationResult: result });
             }
         });
+    }
+
+    showRoute (routeIndex) {
+        this.setState({ routeInfo: this.state.routeCalculationResult.routes[routeIndex] });
+    }
+
+    renderRouteInfo () {
+        if (!this.state.routeCalculationResult) {
+            return;
+        }
+        let distance;
+        let duration;
+
+        if (this.state && this.state.routeInfo && this.state.routeInfo.legs) {
+            this.directionsDisplay.setDirections(this.state.routeCalculationResult);
+            this.directionsDisplay.setRouteIndex(this.state.routeCalculationResult.routes.indexOf(this.state.routeInfo));
+            distance = this.state.routeInfo.legs[0].distance.text;
+            duration = this.state.routeInfo.legs[0].duration.text;
+        }
+
+        const routeInfo = (<div style={{ margin: '20px' }}>
+                       <form>
+                           <div>
+                               <label>Afstand:</label>
+                               <label>{distance}</label>
+                           </div>
+                           <div>
+                               <label>Duur:</label>
+                               <label>{duration}</label>
+                           </div>
+                           <div style={{ marginTop: '20px' }}>
+                             {this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
+                                 return (<div style={{ marginTop: '10px' }} onClick={this.showRoute.bind(this, routeIndex)} key={routeIndex}>Route { routeIndex + 1 }</div>);
+                             }, this)}
+                            </div>
+                       </form>
+                    </div>);
+        return routeInfo;
     }
 
     render () {
         const mapStyle = {
             width: '100%',
-            height: '80vh'
+            height: '60vh'
         };
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <div>
                     <AppBar title="Kaart" />
                     <div ref="mapCanvas" style={mapStyle} />
+                    {this.renderRouteInfo()}
                 </div>
             </MuiThemeProvider>
         );
