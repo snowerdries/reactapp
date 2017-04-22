@@ -4,6 +4,7 @@
   "globals": {
     "it": true,
     "document": true,
-    "google": true
+    "google": true,
+    "console": true
   }
 }
