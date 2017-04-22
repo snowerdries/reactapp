@@ -18,10 +18,10 @@ class App extends Component {
         this.work = new google.maps.LatLng(51.147526, 4.436579);
         this.map = this.createMap();
         this.directionsService = new google.maps.DirectionsService();
-        this.directionsDisplay = new google.maps.DirectionsRenderer();
+        this.directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
         this.directionsDisplay.setMap(this.map);
         this.addTrafficLayer();
-        //this.addMarkers();
+        this.addMarkers();
         this.calculateRoute();
     }
 
@@ -87,36 +87,36 @@ class App extends Component {
             duration = this.state.routeInfo.legs[0].duration.text;
         }
 
-        const routeInfo = (<div style={{ margin: '20px' }}>
-                       <form>
-                           <div>
-                               <label>Afstand:</label>
-                               <label>{distance}</label>
-                           </div>
-                           <div>
-                               <label>Duur:</label>
-                               <label>{duration}</label>
-                           </div>
-                           <div style={{ marginTop: '20px' }}>
-                             {this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
-                                 return (<div style={{ marginTop: '10px' }} onClick={this.showRoute.bind(this, routeIndex)} key={routeIndex}>Route { routeIndex + 1 }</div>);
-                             }, this)}
-                            </div>
-                       </form>
-                    </div>);
+        const routeInfo = (
+        <div className="footer">
+            <form>
+                <div>
+                    <label>Afstand:</label>
+                    <label>{distance}</label>
+                </div>
+                <div>
+                    <label>Duur:</label>
+                    <label>{duration}</label>
+                </div>
+                <div className="routebuttons">
+                    {this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
+                        return (<span className="routebutton"
+                        onClick={this.showRoute.bind(this, routeIndex)}
+                        key={routeIndex}>Route { routeIndex + 1 }</span>);
+                    }, this)}
+                </div>
+            </form>
+        </div>
+        );
         return routeInfo;
     }
 
     render () {
-        const mapStyle = {
-            width: '100%',
-            height: '60vh'
-        };
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <div>
-                    <AppBar title="Kaart" />
-                    <div ref="mapCanvas" style={mapStyle} />
+                    <AppBar className="header" showMenuIconButton={false} title="Kaart" />
+                    <div ref="mapCanvas" className="map" />
                     {this.renderRouteInfo()}
                 </div>
             </MuiThemeProvider>
