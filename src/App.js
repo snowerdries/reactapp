@@ -12,8 +12,12 @@ class App extends Component {
         this.home = new google.maps.LatLng(51.139116, 4.542925);
         this.work = new google.maps.LatLng(51.147526, 4.436579);
         this.map = this.createMap();
+        this.directionsService = new google.maps.DirectionsService();
+        this.directionsDisplay = new google.maps.DirectionsRenderer();
+        this.directionsDisplay.setMap(this.map);
         this.addTrafficLayer();
-        this.addMarkers();
+        //this.addMarkers();
+        this.calculateRoute();
     }
 
     createMap () {
@@ -43,6 +47,20 @@ class App extends Component {
             label: 'W'
         });
         this.workMarker.setMap(this.map);
+    }
+
+    calculateRoute () {
+        const routeRequest = {
+            origin: this.home,
+            destination: this.work,
+            travelMode: 'DRIVING'
+        };
+        const self = this;
+        this.directionsService.route(routeRequest, function routeCalculated (result, status) {
+            if (status === 'OK') {
+                self.directionsDisplay.setDirections(result);
+            }
+        });
     }
 
     render () {
