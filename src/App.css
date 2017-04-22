@@ -40,11 +40,12 @@
   margin-top: 10px;
 }
 
-.map {
+.content {
   width: 100%;    
   top: 80px;
   bottom: 80px;
-  position:absolute;    
+  position:absolute; 
+  background-color: white   
 }
 
 .clear {
