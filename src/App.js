@@ -117,6 +117,7 @@ class App extends Component {
                 <div className="container">
                     <AppBar className="header" showMenuIconButton={false} title="Kaart" />
                     <div ref="mapCanvas" className="map" />
+                    <div className="clear"/>
                     {this.renderRouteInfo()}
                 </div>
             </MuiThemeProvider>
