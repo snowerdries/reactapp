@@ -6,6 +6,8 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { Link } from 'react-router-dom';
+
 injectTapEventPlugin();
 
 class App extends Component {
@@ -116,12 +118,13 @@ class App extends Component {
     render () {
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-                <div className="container">
-                    <AppBar className="header" showMenuIconButton={false} title="Kaart" />
-                    <div ref="mapCanvas" className="map" />
+                <span>
+                    <AppBar className="header" showMenuIconButton={false}
+                    title="Kaart" iconElementRight={<Link to="/settings">SETTINGS</Link>} />
+                    <div ref="mapCanvas" className="content" />
                     <div className="clear"/>
                     {this.renderRouteInfo()}
-                </div>
+                </span>
             </MuiThemeProvider>
         );
     }
