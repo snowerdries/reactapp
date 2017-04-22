@@ -114,7 +114,7 @@ class App extends Component {
     render () {
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-                <div>
+                <div className="container">
                     <AppBar className="header" showMenuIconButton={false} title="Kaart" />
                     <div ref="mapCanvas" className="map" />
                     {this.renderRouteInfo()}
