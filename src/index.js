@@ -10,7 +10,7 @@ import {
 
 ReactDOM.render(
   <Router>
-    <div className="container">
+    <div className="containerapp">
         <Route exact path="/" component={App}/>
         <Route exact path="/settings" component={Settings}/>
     </div>
