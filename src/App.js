@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import AppBar from 'material-ui/AppBar';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -67,6 +67,10 @@ class App extends Component {
     }
 
     calculateRoute () {
+        let waypoints = [];
+        if (localStorage.getItem("stopInSchool") === "true") {
+            waypoints = [{ location: 'Schoolstraat 25, 2547 Lint', stopover: true }];
+        }
         const routeRequest = {
             origin: this.home,
             destination: this.work,
@@ -75,7 +79,7 @@ class App extends Component {
                 departureTime: new Date(),
                 trafficModel: 'bestguess'
             },
-            waypoints: [{ location: 'Schoolstraat 25, 2547 Lint', stopover: true }],
+            waypoints: waypoints,
             provideRouteAlternatives: true
         };
         const self = this;
