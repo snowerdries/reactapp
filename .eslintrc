@@ -6,6 +6,7 @@
     "document": true,
     "google": true,
     "console": true,
-    "Math": true
+    "Math": true,
+    "localStorage": true
   }
 }
