@@ -12,6 +12,8 @@ import IconButton from 'material-ui/IconButton';
 import { sumBy } from 'lodash';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import MapsDirectionsCar from 'material-ui/svg-icons/maps/directions-car';
+import ImageTimer from 'material-ui/svg-icons/image/timer';
 
 
 injectTapEventPlugin();
@@ -24,8 +26,13 @@ class App extends Component {
     }
 
     componentDidMount () {
-        this.home = new google.maps.LatLng(51.139116, 4.542925);
-        this.work = new google.maps.LatLng(51.147526, 4.436579);
+        this.settings = JSON.parse(localStorage.getItem("settings"));
+        if (!this.settings) {
+            this.settings = {};
+        }
+        this.home = new google.maps.LatLng(this.settings.homeLocation);
+        this.work = new google.maps.LatLng(this.settings.workLocation);
+        this.school = new google.maps.LatLng(this.settings.schoolLocation);
         //BORGERHOUT
         //this.work = new google.maps.LatLng(51.2177832, 4.43496099999993);
         this.map = this.createMap();
@@ -64,12 +71,19 @@ class App extends Component {
             label: 'W'
         });
         this.workMarker.setMap(this.map);
+
+        this.workMarker = new google.maps.Marker({
+            position: this.school,
+            title: 'School',
+            label: 'S'
+        });
+        this.workMarker.setMap(this.map);
     }
 
     calculateRoute () {
         let waypoints = [];
-        if (localStorage.getItem("stopInSchool") === "true") {
-            waypoints = [{ location: 'Schoolstraat 25, 2547 Lint', stopover: true }];
+        if (this.settings.isToggled) {
+            waypoints = [{ location: this.school, stopover: true }];
         }
 
         let a = this.home;
@@ -149,13 +163,11 @@ class App extends Component {
         <div className="footer">
             <form>
                 <div className="row">
-                    <div className="col-xs-6">
-                        <label>Afstand:</label>
-                        <label>{distance} km</label>
+                    <div className="col-xs-4">
+                        <MapsDirectionsCar /> <span>{distance} km</span>
                     </div>
-                    <div className="col-xs-6">
-                        <label>Duur:</label>
-                        <label>{duration} min</label>
+                    <div className="col-xs-4">
+                        <ImageTimer /> {duration} min
                     </div>
                 </div>
             </form>
