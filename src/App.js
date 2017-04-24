@@ -7,6 +7,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Link } from 'react-router-dom';
+import ActionSettings from 'material-ui/svg-icons/action/settings';
+import IconButton from 'material-ui/IconButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 injectTapEventPlugin();
 
@@ -20,6 +23,8 @@ class App extends Component {
     componentDidMount () {
         this.home = new google.maps.LatLng(51.139116, 4.542925);
         this.work = new google.maps.LatLng(51.147526, 4.436579);
+        //BORGERHOUT
+        //this.work = new google.maps.LatLng(51.2177832, 4.43496099999993);
         this.map = this.createMap();
         this.directionsService = new google.maps.DirectionsService();
         this.directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
@@ -63,6 +68,11 @@ class App extends Component {
             origin: this.home,
             destination: this.work,
             travelMode: 'DRIVING',
+            drivingOptions: {
+                departureTime: new Date(),
+                trafficModel: 'bestguess'
+            },
+            waypoints: [{ location: 'Duffelsesteenweg 48, 2547 Lint', stopover: false }],
             provideRouteAlternatives: true
         };
         const self = this;
@@ -94,20 +104,22 @@ class App extends Component {
         const routeInfo = (
         <div className="footer">
             <form>
-                <div>
-                    <label>Afstand:</label>
-                    <label>{distance}</label>
-                </div>
-                <div>
-                    <label>Duur:</label>
-                    <label>{duration}</label>
-                </div>
-                <div className="routebuttons">
-                    {this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
-                        return (<span className="routebutton"
-                        onClick={this.showRoute.bind(this, routeIndex)}
-                        key={routeIndex}>Route { routeIndex + 1 }</span>);
-                    }, this)}
+                <div className="row">
+                    <div className="col-xs-3">
+                        <label>Afstand:</label>
+                        <label>{distance}</label>
+                    </div>
+                    <div className="col-xs-3">
+                        <label>Duur:</label>
+                        <label>{duration}</label>
+                    </div>
+                    <div className="col-xs-6">
+                        {this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
+                            const label = "Route " + (routeIndex + 1);
+                            return (<RaisedButton className="routebutton" label={label} key={routeIndex}
+                            onClick={this.showRoute.bind(this, routeIndex)} />);
+                        }, this)}
+                    </div>
                 </div>
             </form>
         </div>
@@ -120,7 +132,7 @@ class App extends Component {
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <span>
                     <AppBar className="header" showMenuIconButton={false}
-                    title="Kaart" iconElementRight={<Link to="/settings">SETTINGS</Link>} />
+                    title="KAART" iconElementRight={<Link to="/settings"><IconButton><ActionSettings color="black" /></IconButton></Link>} />
                     <div ref="mapCanvas" className="content" />
                     <div className="clear"/>
                     {this.renderRouteInfo()}
