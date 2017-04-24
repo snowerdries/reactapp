@@ -71,9 +71,19 @@ class App extends Component {
         if (localStorage.getItem("stopInSchool") === "true") {
             waypoints = [{ location: 'Schoolstraat 25, 2547 Lint', stopover: true }];
         }
+
+        let a = this.home;
+        let b = this.work;
+
+        const hour = new Date().getHours();
+        if (hour > 12) {
+            a = this.work;
+            b = this.home;
+        }
+
         const routeRequest = {
-            origin: this.home,
-            destination: this.work,
+            origin: a,
+            destination: b,
             travelMode: 'DRIVING',
             drivingOptions: {
                 departureTime: new Date(),
@@ -160,7 +170,7 @@ class App extends Component {
                 <span>
                     <div className="header">
                     <AppBar showMenuIconButton={false}
-                    title="KAART" iconElementRight={<Link to="/settings"><IconButton><ActionSettings color="black" /></IconButton></Link>} />
+                    title="KAART" iconElementRight={<Link to="/settings"><IconButton><ActionSettings /></IconButton></Link>} />
                     {this.renderRouteSelection()}
                     </div>
                     <div ref="mapCanvas" className="content" />
