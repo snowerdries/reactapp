@@ -9,8 +9,9 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Link } from 'react-router-dom';
 import ActionSettings from 'material-ui/svg-icons/action/settings';
 import IconButton from 'material-ui/IconButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import { sumBy } from 'lodash';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 
 injectTapEventPlugin();
@@ -80,13 +81,33 @@ class App extends Component {
         const self = this;
         this.directionsService.route(routeRequest, function routeCalculated (result, status) {
             if (status === 'OK') {
-                self.setState({ routeInfo: result.routes[0], routeCalculationResult: result });
+                self.setState({ routeInfo: result.routes[0], routeCalculationResult: result, selectedRoute: 0 });
             }
         });
     }
 
-    showRoute (routeIndex) {
-        this.setState({ routeInfo: this.state.routeCalculationResult.routes[routeIndex] });
+    showRoute (event, index, value) {
+        this.setState({ routeInfo: this.state.routeCalculationResult.routes[value], selectedRoute: value });
+    }
+
+    renderRouteSelection () {
+        if (!this.state.routeCalculationResult) {
+            return null;
+        }
+
+        return (
+        <SelectField className="routeselection"
+          floatingLabelText="Route"
+          value={this.state.selectedRoute}
+          onChange={this.showRoute.bind(this)}
+        >
+        {this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
+            const label = "Route " + (routeIndex + 1);
+            return (<MenuItem value={routeIndex} primaryText={label} key={routeIndex}
+             />);
+        }, this)}
+        </SelectField>
+        );
     }
 
     renderRouteInfo () {
@@ -114,20 +135,13 @@ class App extends Component {
         <div className="footer">
             <form>
                 <div className="row">
-                    <div className="col-xs-3">
+                    <div className="col-xs-6">
                         <label>Afstand:</label>
                         <label>{distance} km</label>
                     </div>
-                    <div className="col-xs-3">
+                    <div className="col-xs-6">
                         <label>Duur:</label>
                         <label>{duration} min</label>
-                    </div>
-                    <div className="col-xs-6">
-                        {this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
-                            const label = "Route " + (routeIndex + 1);
-                            return (<RaisedButton className="routebutton" label={label} key={routeIndex}
-                            onClick={this.showRoute.bind(this, routeIndex)} />);
-                        }, this)}
                     </div>
                 </div>
             </form>
@@ -140,8 +154,11 @@ class App extends Component {
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <span>
-                    <AppBar className="header" showMenuIconButton={false}
+                    <div className="header">
+                    <AppBar showMenuIconButton={false}
                     title="KAART" iconElementRight={<Link to="/settings"><IconButton><ActionSettings color="black" /></IconButton></Link>} />
+                    {this.renderRouteSelection()}
+                    </div>
                     <div ref="mapCanvas" className="content" />
                     <div className="clear"/>
                     {this.renderRouteInfo()}
