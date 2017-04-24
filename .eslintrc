@@ -5,6 +5,7 @@
     "it": true,
     "document": true,
     "google": true,
-    "console": true
+    "console": true,
+    "Math": true
   }
 }

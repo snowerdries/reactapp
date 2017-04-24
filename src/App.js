@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import ActionSettings from 'material-ui/svg-icons/action/settings';
 import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import { sumBy } from 'lodash';
+
 
 injectTapEventPlugin();
 
@@ -72,7 +74,7 @@ class App extends Component {
                 departureTime: new Date(),
                 trafficModel: 'bestguess'
             },
-            waypoints: [{ location: 'Duffelsesteenweg 48, 2547 Lint', stopover: false }],
+            waypoints: [{ location: 'Schoolstraat 25, 2547 Lint', stopover: true }],
             provideRouteAlternatives: true
         };
         const self = this;
@@ -97,8 +99,15 @@ class App extends Component {
         if (this.state && this.state.routeInfo && this.state.routeInfo.legs) {
             this.directionsDisplay.setDirections(this.state.routeCalculationResult);
             this.directionsDisplay.setRouteIndex(this.state.routeCalculationResult.routes.indexOf(this.state.routeInfo));
-            distance = this.state.routeInfo.legs[0].distance.text;
-            duration = this.state.routeInfo.legs[0].duration.text;
+            distance = sumBy(this.state.routeInfo.legs, function (leg) {
+                return leg.distance.value;
+            });
+            duration = sumBy(this.state.routeInfo.legs, function (leg) {
+                return leg.duration.value;
+            });
+
+            distance /= 1000;
+            duration = Math.ceil(duration / 60);
         }
 
         const routeInfo = (
@@ -107,11 +116,11 @@ class App extends Component {
                 <div className="row">
                     <div className="col-xs-3">
                         <label>Afstand:</label>
-                        <label>{distance}</label>
+                        <label>{distance} km</label>
                     </div>
                     <div className="col-xs-3">
                         <label>Duur:</label>
-                        <label>{duration}</label>
+                        <label>{duration} min</label>
                     </div>
                     <div className="col-xs-6">
                         {this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
