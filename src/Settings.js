@@ -73,27 +73,27 @@ class Settings extends Component {
                                     <Toggle toggled={this.state.isToggled} label="Stop in school" onToggle={this.stopInSchoolToggled.bind(this)} />
                                 </div>
                             </div>
-                            <div className="row">
-                                <div className="col-xs-6">
+                            <div className="row addresssettings">
+                                <div className="col-xs-12">
                                     <label>{this.state.homeText}</label>
                                 </div>
-                                <div className="col-xs-6">
+                                <div className="col-xs-12">
                                     <TextField id="homeAddress"/>
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-xs-6">
+                                <div className="col-xs-12">
                                     <label>{this.state.schoolText}</label>
                                 </div>
-                                <div className="col-xs-6">
+                                <div className="col-xs-12">
                                     <TextField id="schoolAddress"/>
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-xs-6">
+                                <div className="col-xs-12">
                                     <label>{this.state.workText}</label>
                                 </div>
-                                <div className="col-xs-6">
+                                <div className="col-xs-12">
                                     <TextField id="workAddress"/>
                                 </div>
                             </div>

@@ -90,7 +90,7 @@ class App extends Component {
         let b = this.work;
 
         const hour = new Date().getHours();
-        if (hour > 12) {
+        if (hour > 14) {
             a = this.work;
             b = this.home;
         }
@@ -163,10 +163,10 @@ class App extends Component {
         <div className="footer">
             <form>
                 <div className="row">
-                    <div className="col-xs-4">
+                    <div className="col-xs-6">
                         <MapsDirectionsCar /> <span>{distance} km</span>
                     </div>
-                    <div className="col-xs-4">
+                    <div className="col-xs-6">
                         <ImageTimer /> {duration} min
                     </div>
                 </div>
