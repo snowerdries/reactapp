@@ -32,7 +32,7 @@ class Settings extends Component {
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <span>
                         <AppBar className="header"
-                         showMenuIconButton={false} title="SETTINGS" iconElementRight={<Link to="/"><IconButton><NavigationArrowBack color="black"/></IconButton></Link>} />
+                         showMenuIconButton={false} title="SETTINGS" iconElementRight={<Link to="/"><IconButton><NavigationArrowBack /></IconButton></Link>} />
                         <div className="content">
                             <div className="row">
                                 <div className="col-xs-6">
