@@ -7,6 +7,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Link } from 'react-router-dom';
+import ActionSettings from 'material-ui/svg-icons/action/settings';
+import IconButton from 'material-ui/IconButton';
 
 injectTapEventPlugin();
 
@@ -20,6 +22,8 @@ class App extends Component {
     componentDidMount () {
         this.home = new google.maps.LatLng(51.139116, 4.542925);
         this.work = new google.maps.LatLng(51.147526, 4.436579);
+        //BORGERHOUT
+        //this.work = new google.maps.LatLng(51.2177832, 4.43496099999993);
         this.map = this.createMap();
         this.directionsService = new google.maps.DirectionsService();
         this.directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
@@ -63,6 +67,10 @@ class App extends Component {
             origin: this.home,
             destination: this.work,
             travelMode: 'DRIVING',
+            drivingOptions: {
+                departureTime: new Date(),
+                trafficModel: 'bestguess'
+            },
             provideRouteAlternatives: true
         };
         const self = this;
@@ -120,7 +128,7 @@ class App extends Component {
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <span>
                     <AppBar className="header" showMenuIconButton={false}
-                    title="Kaart" iconElementRight={<Link to="/settings">SETTINGS</Link>} />
+                    title="Kaart" iconElementRight={<Link to="/settings"><IconButton><ActionSettings color="black" /></IconButton></Link>} />
                     <div ref="mapCanvas" className="content" />
                     <div className="clear"/>
                     {this.renderRouteInfo()}

@@ -6,6 +6,8 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Link } from 'react-router-dom';
+import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import IconButton from 'material-ui/IconButton';
 
 
 
@@ -24,7 +26,7 @@ class Settings extends Component {
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <span>
                         <AppBar className="header"
-                         showMenuIconButton={false} title="Settings" iconElementRight={<Link to="/">BACK</Link>} />
+                         showMenuIconButton={false} title="Settings" iconElementRight={<Link to="/"><IconButton><NavigationArrowBack color="black"/></IconButton></Link>} />
                         <div className="content">
                             Dit zijn de settings.
                         </div>
