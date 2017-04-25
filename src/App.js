@@ -159,22 +159,7 @@ class App extends Component {
         const routeInfo = (
         <div className="footer">
                 {
-                    this.state.routeInfo.legs.map(function oneLeg (leg, index) {
-                        const key = "route" + index;
-                        return (
-                            <div key={key} className="row">
-                                <div className="col-xs-1">
-                                    {index + 1}
-                                </div>
-                                <div className="col-xs-5">
-                                    <MapsDirectionsCar /> {leg.distance.text}
-                                </div>
-                                <div className="col-xs-5">
-                                    <ImageTimer /> {leg.duration.text}
-                                </div>
-                            </div>
-                        );
-                    })
+                    this.renderRouteLegs()
                 }
                 <div className="row">
                     <div className="col-xs-1">
@@ -190,6 +175,29 @@ class App extends Component {
         </div>
         );
         return routeInfo;
+    }
+
+    renderRouteLegs () {
+        if (this.state.routeInfo.legs.length < 2) {
+            return null;
+        }
+
+        return this.state.routeInfo.legs.map(function oneLeg (leg, index) {
+            const key = "route" + index;
+            return (
+                <div key={key} className="row">
+                    <div className="col-xs-1">
+                        {index + 1}
+                    </div>
+                    <div className="col-xs-5">
+                        <MapsDirectionsCar /> {leg.distance.text}
+                    </div>
+                    <div className="col-xs-5">
+                        <ImageTimer /> {leg.duration.text}
+                    </div>
+                </div>
+            );
+        });
     }
 
     render () {
