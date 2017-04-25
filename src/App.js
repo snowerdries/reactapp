@@ -88,7 +88,7 @@ class App extends Component {
         let b = this.work;
 
         const hour = new Date().getHours();
-        if (hour > 14) {
+        if (hour > 13) {
             a = this.work;
             b = this.home;
         }
