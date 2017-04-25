@@ -11,15 +11,12 @@ import IconButton from 'material-ui/IconButton';
 import Toggle from 'material-ui/Toggle';
 import TextField from 'material-ui/TextField';
 
-
-
 class Settings extends Component {
-
     constructor (props) {
         super(props);
         let settings = JSON.parse(localStorage.getItem("settings"));
         if (!settings) {
-            settings = { isToggled: false };
+            settings = { isStopAtSchoolToggled: false };
         }
         this.state = settings;
     }
@@ -58,7 +55,7 @@ class Settings extends Component {
     }
 
     stopInSchoolToggled (event, isInputChecked) {
-        this.setState({ isToggled: isInputChecked });
+        this.setState({ isStopAtSchoolToggled: isInputChecked });
     }
 
     render () {
@@ -66,11 +63,12 @@ class Settings extends Component {
             <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                 <span>
                         <AppBar className="header"
-                         showMenuIconButton={false} title="SETTINGS" iconElementRight={<Link to="/"><IconButton><NavigationArrowBack /></IconButton></Link>} />
+                            showMenuIconButton={false} title="SETTINGS"
+                            iconElementRight={<Link to="/"><IconButton><NavigationArrowBack /></IconButton></Link>} />
                         <div className="content settingscontent">
                             <div className="row">
                                 <div className="col-xs-6">
-                                    <Toggle toggled={this.state.isToggled} label="Stop in school" onToggle={this.stopInSchoolToggled.bind(this)} />
+                                    <Toggle toggled={this.state.isStopAtSchoolToggled} label="Stop in school" onToggle={this.stopInSchoolToggled.bind(this)} />
                                 </div>
                             </div>
                             <div className="row addresssettings">
