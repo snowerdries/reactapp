@@ -33,8 +33,6 @@ class App extends Component {
         this.home = new google.maps.LatLng(this.settings.homeLocation);
         this.work = new google.maps.LatLng(this.settings.workLocation);
         this.school = new google.maps.LatLng(this.settings.schoolLocation);
-        //BORGERHOUT
-        //this.work = new google.maps.LatLng(51.2177832, 4.43496099999993);
         this.map = this.createMap();
         this.directionsService = new google.maps.DirectionsService();
         this.directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
@@ -82,7 +80,7 @@ class App extends Component {
 
     calculateRoute () {
         let waypoints = [];
-        if (this.settings.isToggled) {
+        if (this.settings.isStopAtSchoolToggled) {
             waypoints = [{ location: this.school, stopover: true }];
         }
 
@@ -127,8 +125,7 @@ class App extends Component {
         <SelectField className="routeselection"
           floatingLabelText="Route"
           value={this.state.selectedRoute}
-          onChange={this.showRoute.bind(this)}
-        >
+          onChange={this.showRoute.bind(this)}>
         {this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
             const label = "Route " + (routeIndex + 1);
             return (<MenuItem value={routeIndex} primaryText={label} key={routeIndex}
@@ -161,16 +158,35 @@ class App extends Component {
 
         const routeInfo = (
         <div className="footer">
-            <form>
+                {
+                    this.state.routeInfo.legs.map(function oneLeg (leg, index) {
+                        const key = "route" + index;
+                        return (
+                            <div key={key} className="row">
+                                <div className="col-xs-1">
+                                    {index + 1}
+                                </div>
+                                <div className="col-xs-5">
+                                    <MapsDirectionsCar /> {leg.distance.text}
+                                </div>
+                                <div className="col-xs-5">
+                                    <ImageTimer /> {leg.duration.text}
+                                </div>
+                            </div>
+                        );
+                    })
+                }
                 <div className="row">
-                    <div className="col-xs-6">
+                    <div className="col-xs-1">
+                        Tot.
+                    </div>
+                    <div className="col-xs-5">
                         <MapsDirectionsCar /> <span>{distance} km</span>
                     </div>
-                    <div className="col-xs-6">
+                    <div className="col-xs-5">
                         <ImageTimer /> {duration} min
                     </div>
-                </div>
-            </form>
+                 </div>
         </div>
         );
         return routeInfo;
