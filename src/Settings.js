@@ -1,15 +1,7 @@
 /*global google*/
 import React, { Component } from 'react';
 import './App.css';
-import AppBar from 'material-ui/AppBar';
-import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Link } from 'react-router-dom';
-import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
-import IconButton from 'material-ui/IconButton';
-import Toggle from 'material-ui/Toggle';
-import TextField from 'material-ui/TextField';
 
 class Settings extends Component {
     constructor (props) {
@@ -54,52 +46,65 @@ class Settings extends Component {
         this.setState({ workText: place.formatted_address, workLocation: place.geometry.location });
     }
 
-    stopInSchoolToggled (event, isInputChecked) {
-        this.setState({ isStopAtSchoolToggled: isInputChecked });
+    handleInputChange (event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        this.setState({ isStopAtSchoolToggled: value });
     }
 
     render () {
         return (
-            <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-                <span>
-                        <AppBar className="header"
-                            showMenuIconButton={false} title="SETTINGS"
-                            iconElementRight={<Link to="/"><IconButton><NavigationArrowBack /></IconButton></Link>} />
-                        <div className="content settingscontent">
-                            <div className="row">
-                                <div className="col-xs-6">
-                                    <Toggle toggled={this.state.isStopAtSchoolToggled} label="Stop in school" onToggle={this.stopInSchoolToggled.bind(this)} />
-                                </div>
-                            </div>
-                            <div className="row addresssettings">
-                                <div className="col-xs-12">
-                                    <label>{this.state.homeText}</label>
-                                </div>
-                                <div className="col-xs-12">
-                                    <TextField id="homeAddress"/>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-xs-12">
-                                    <label>{this.state.schoolText}</label>
-                                </div>
-                                <div className="col-xs-12">
-                                    <TextField id="schoolAddress"/>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-xs-12">
-                                    <label>{this.state.workText}</label>
-                                </div>
-                                <div className="col-xs-12">
-                                    <TextField id="workAddress"/>
-                                </div>
+            <span>
+                    <div className="row hcenter">
+                        <div className="col-xs-4" />
+                        <div className="col-xs-4">
+                            <h4><span className="label label-primary">SETTINGS</span></h4>
+                        </div>
+                        <div className="col-xs-4">
+                            <Link to="/"><i className="fa fa-long-arrow-left fa-2x" aria-hidden="true" /></Link>
+                        </div>
+                    </div>
+                    <div className="content settingscontent">
+                        <div className="row">
+                            <div className="col-xs-6">
+                                <label>
+                                    Stop in school
+                                    <input
+                                        name="stopInSchool"
+                                        type="checkbox"
+                                        checked={this.state.isStopAtSchoolToggled}
+                                        onChange={this.handleInputChange.bind(this)} />
+                                </label>
                             </div>
                         </div>
-                        <div className="clear"/>
-                        <div className="footer" />
-                </span>
-            </MuiThemeProvider>
+                        <div className="row addresssettings">
+                            <div className="col-xs-12">
+                                <label>{this.state.homeText}</label>
+                            </div>
+                            <div className="col-xs-12">
+                                <input type="text" id="homeAddress"/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-xs-12">
+                                <label>{this.state.schoolText}</label>
+                            </div>
+                            <div className="col-xs-12">
+                                <input type="text" id="schoolAddress"/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-xs-12">
+                                <label>{this.state.workText}</label>
+                            </div>
+                            <div className="col-xs-12">
+                                <input type="text" id="workAddress"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="clear"/>
+                    <div className="footer" />
+            </span>
         );
     }
 }

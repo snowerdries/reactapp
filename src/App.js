@@ -1,20 +1,9 @@
 /*global google*/
 import React, { Component } from 'react';
 import './App.css';
-import AppBar from 'material-ui/AppBar';
-import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { Link } from 'react-router-dom';
-import ActionSettings from 'material-ui/svg-icons/action/settings';
-import IconButton from 'material-ui/IconButton';
 import { sumBy } from 'lodash';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import MapsDirectionsCar from 'material-ui/svg-icons/maps/directions-car';
-import ImageTimer from 'material-ui/svg-icons/image/timer';
-
 
 injectTapEventPlugin();
 
@@ -112,7 +101,7 @@ class App extends Component {
         });
     }
 
-    showRoute (event, index, value) {
+    showRoute (value) {
         this.setState({ routeInfo: this.state.routeCalculationResult.routes[value], selectedRoute: value });
     }
 
@@ -121,17 +110,24 @@ class App extends Component {
             return null;
         }
 
+
+
         return (
-        <SelectField className="routeselection"
-          floatingLabelText="Route"
-          value={this.state.selectedRoute}
-          onChange={this.showRoute.bind(this)}>
-        {this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
-            const label = "Route " + (routeIndex + 1);
-            return (<MenuItem value={routeIndex} primaryText={label} key={routeIndex}
-             />);
-        }, this)}
-        </SelectField>
+
+            <div className="dropdown">
+                <button className="btn btn-default dropdown-toggle" type="button" id="routeSelection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Route
+                    <span className="caret" />
+                </button>
+                <ul className="dropdown-menu" aria-labelledby="routeSelection">
+                    {
+                        this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
+                            const label = "Route " + (routeIndex + 1);
+                            return (<li key={label} onClick={this.showRoute.bind(this, routeIndex)}>{label}</li>);
+                        }, this)
+                    }
+                </ul>
+            </div>
         );
     }
 
@@ -162,14 +158,14 @@ class App extends Component {
                     this.renderRouteLegs()
                 }
                 <div className="row">
-                    <div className="col-xs-1">
+                    <div className="col-xs-4">
                         Tot.
                     </div>
-                    <div className="col-xs-5">
-                        <MapsDirectionsCar /> <span>{distance} km</span>
+                    <div className="col-xs-4">
+                        <i className="fa fa-car" aria-hidden="true" /> {distance} km
                     </div>
-                    <div className="col-xs-5">
-                        <ImageTimer /> {duration} min
+                    <div className="col-xs-4">
+                        <i className="fa fa-clock-o" aria-hidden="true" /> {duration} min
                     </div>
                  </div>
         </div>
@@ -186,14 +182,14 @@ class App extends Component {
             const key = "route" + index;
             return (
                 <div key={key} className="row">
-                    <div className="col-xs-1">
+                    <div className="col-xs-4">
                         {index + 1}
                     </div>
-                    <div className="col-xs-5">
-                        <MapsDirectionsCar /> {leg.distance.text}
+                    <div className="col-xs-4">
+                        <i className="fa fa-car" aria-hidden="true"/> {leg.distance.text}
                     </div>
-                    <div className="col-xs-5">
-                        <ImageTimer /> {leg.duration.text}
+                    <div className="col-xs-4">
+                        <i className="fa fa-clock-o" aria-hidden="true" /> {leg.duration.text}
                     </div>
                 </div>
             );
@@ -202,18 +198,22 @@ class App extends Component {
 
     render () {
         return (
-            <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-                <span>
-                    <div className="header">
-                    <AppBar showMenuIconButton={false}
-                    title="KAART" iconElementRight={<Link to="/settings"><IconButton><ActionSettings /></IconButton></Link>} />
-                    {this.renderRouteSelection()}
+            <span>
+                <div className="row hcenter">
+                    <div className="col-xs-4">
+                        {this.renderRouteSelection()}
                     </div>
-                    <div ref="mapCanvas" className="content" />
-                    <div className="clear"/>
-                    {this.renderRouteInfo()}
-                </span>
-            </MuiThemeProvider>
+                     <div className="col-xs-4">
+                        <h4><span className="label label-primary">KAART</span></h4>
+                    </div>
+                     <div className="col-xs-4">
+                        <Link to="/settings"><i className="fa fa-cog fa-2x" aria-hidden="true" /></Link>
+                    </div>
+                </div>
+                <div ref="mapCanvas" className="content" />
+                <div className="clear"/>
+                {this.renderRouteInfo()}
+            </span>
         );
     }
 }
