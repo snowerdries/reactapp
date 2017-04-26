@@ -196,16 +196,16 @@ class App extends Component {
         return (
             <span>
                 <div className="row hcenter">
-                    <div className="col-xs-2">
+                    <div className="col-xs-2 no-padding">
                         Route { isNaN(this.state.selectedRoute) ? '' : this.state.selectedRoute + 1 }
                     </div>
-                    <div className="col-xs-2">
+                    <div className="col-xs-2 no-padding">
                         {this.renderRouteSelection()}
                     </div>
-                     <div className="col-xs-4">
+                     <div className="col-xs-4 no-padding">
                         <h4><span className="label label-primary">KAART</span></h4>
                     </div>
-                     <div className="col-xs-4">
+                     <div className="col-xs-4 no-padding">
                         <Link to="/settings"><i className="fa fa-cog fa-2x" aria-hidden="true" /></Link>
                     </div>
                 </div>

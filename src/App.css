@@ -19,6 +19,10 @@ body {
 	bottom: 0; 
 }
 
+.no-padding {
+  padding: 0px;
+}
+
 .dropdownright{
   left: 0px !important;
 }
