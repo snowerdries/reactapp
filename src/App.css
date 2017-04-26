@@ -1,21 +1,9 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+body {
+  background-color: lightgray;
 }
 
 .header {
-  height: 130px;  
+  height: 40px;  
 }
 
 .addresssettings {
@@ -25,11 +13,10 @@
 .footer {  
   margin-left: 24px;
   margin-top: 10px;
-  height: 90px;
+  height: 70px;
   width: 100%;    
   position: absolute;
-	bottom: 0;
-  background-color: rgb(0, 188, 212); 
+	bottom: 0; 
 }
 
 .routeselection {
@@ -50,31 +37,24 @@
 
 .content {
   width: 100%;    
-  top: 130px;
-  bottom: 90px;
-  position:absolute; 
-  background-color: white;
+  top: 40px;
+  bottom: 70px;
+  position:absolute;   
   overflow: auto;   
 }
 
 .clear {
-  height: 90px;
+  height: 70px;
 }
 
 .containerapp {
   min-height: 100%;
 	position: relative;
-	overflow: hidden;
-  background-color: rgb(0, 188, 212);  
+	overflow: hidden;  
 }
 
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.hcenter {
+  text-align: center;
 }
 
 .settingscontent {
