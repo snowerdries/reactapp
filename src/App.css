@@ -19,6 +19,10 @@ body {
 	bottom: 0; 
 }
 
+.dropdownright{
+  left: 0px !important;
+}
+
 .routeselection {
   margin-left: 24px;  
 }

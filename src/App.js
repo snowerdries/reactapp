@@ -109,17 +109,13 @@ class App extends Component {
         if (!this.state.routeCalculationResult) {
             return null;
         }
-
-
-
         return (
-
             <div className="dropdown">
                 <button className="btn btn-default dropdown-toggle" type="button" id="routeSelection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     Route
                     <span className="caret" />
                 </button>
-                <ul className="dropdown-menu" aria-labelledby="routeSelection">
+                <ul className="dropdown-menu dropdownright" aria-labelledby="routeSelection">
                     {
                         this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
                             const label = "Route " + (routeIndex + 1);
@@ -159,7 +155,7 @@ class App extends Component {
                 }
                 <div className="row">
                     <div className="col-xs-4">
-                        Tot.
+                        <span className="badge">TOT</span>
                     </div>
                     <div className="col-xs-4">
                         <i className="fa fa-car" aria-hidden="true" /> {distance} km
@@ -183,7 +179,7 @@ class App extends Component {
             return (
                 <div key={key} className="row">
                     <div className="col-xs-4">
-                        {index + 1}
+                        <span className="badge">{index + 1}</span>
                     </div>
                     <div className="col-xs-4">
                         <i className="fa fa-car" aria-hidden="true"/> {leg.distance.text}
@@ -200,7 +196,10 @@ class App extends Component {
         return (
             <span>
                 <div className="row hcenter">
-                    <div className="col-xs-4">
+                    <div className="col-xs-2">
+                        Route { isNaN(this.state.selectedRoute) ? '' : this.state.selectedRoute + 1 }
+                    </div>
+                    <div className="col-xs-2">
                         {this.renderRouteSelection()}
                     </div>
                      <div className="col-xs-4">
