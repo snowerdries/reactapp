@@ -1,9 +1,22 @@
 body {
-  background-color: lightgray;
+  background-color: white;
 }
 
 .header {
-  height: 40px;  
+  height: 50px; 
+  border-radius: 15px;
+  border: 2px solid black;
+  width: 100%;
+  margin-left: 1px;
+}
+
+.headerleft {
+  margin: 6px;
+}
+
+.headerright {
+  margin: 8px;
+  color: black;
 }
 
 .addresssettings {
@@ -17,6 +30,9 @@ body {
   width: 100%;    
   position: absolute;
 	bottom: 0; 
+  border-radius: 15px;
+  border: 2px solid black;
+  margin-left: 1px;
 }
 
 .no-padding {
@@ -45,10 +61,10 @@ body {
 
 .content {
   width: 100%;    
-  top: 40px;
+  top: 50px;
   bottom: 70px;
   position:absolute;   
-  overflow: auto;   
+  overflow: auto;  
 }
 
 .clear {
