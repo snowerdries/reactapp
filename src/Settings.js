@@ -55,13 +55,10 @@ class Settings extends Component {
     render () {
         return (
             <span>
-                    <div className="row hcenter">
-                        <div className="col-xs-4" />
-                        <div className="col-xs-4">
-                            <h4><span className="label label-primary">SETTINGS</span></h4>
-                        </div>
-                        <div className="col-xs-4">
-                            <Link to="/"><i className="fa fa-long-arrow-left fa-2x" aria-hidden="true" /></Link>
+                    <div className="row header">
+                        <div className="col-xs-6" ><span className="label label-info">Settings</span></div>
+                        <div className="col-xs-6">
+                            <Link className="pull-right headerright" to="/"><i className="fa fa-long-arrow-left fa-2x" aria-hidden="true" /></Link>
                         </div>
                     </div>
                     <div className="content settingscontent">
@@ -103,7 +100,6 @@ class Settings extends Component {
                         </div>
                     </div>
                     <div className="clear"/>
-                    <div className="footer" />
             </span>
         );
     }

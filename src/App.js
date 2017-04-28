@@ -109,20 +109,22 @@ class App extends Component {
         if (!this.state.routeCalculationResult) {
             return null;
         }
+        const selectedRouteLabel = "Route" + (isNaN(this.state.selectedRoute) ? '' : this.state.selectedRoute + 1);
         return (
-            <div className="dropdown">
-                <button className="btn btn-default dropdown-toggle" type="button" id="routeSelection" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Route
+            <div className="btn-group headerleft">
+                <button type="button" className="btn btn-info">{selectedRouteLabel}</button>
+                <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span className="caret" />
+                    <span className="sr-only">Toggle Dropdown</span>
                 </button>
-                <ul className="dropdown-menu dropdownright" aria-labelledby="routeSelection">
-                    {
-                        this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
-                            const label = "Route " + (routeIndex + 1);
-                            return (<li key={label} onClick={this.showRoute.bind(this, routeIndex)}>{label}</li>);
-                        }, this)
-                    }
-                </ul>
+                    <ul className="dropdown-menu dropdownright" aria-labelledby="routeSelection">
+                        {
+                            this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
+                                const label = "Route " + (routeIndex + 1);
+                                return (<li key={label} onClick={this.showRoute.bind(this, routeIndex)}>{label}</li>);
+                            }, this)
+                        }
+                    </ul>
             </div>
         );
     }
@@ -153,7 +155,7 @@ class App extends Component {
                 {
                     this.renderRouteLegs()
                 }
-                <div className="row">
+                <div className="row hcenter">
                     <div className="col-xs-4">
                         <span className="badge">TOT</span>
                     </div>
@@ -177,7 +179,7 @@ class App extends Component {
         return this.state.routeInfo.legs.map(function oneLeg (leg, index) {
             const key = "route" + index;
             return (
-                <div key={key} className="row">
+                <div key={key} className="row hcenter">
                     <div className="col-xs-4">
                         <span className="badge">{index + 1}</span>
                     </div>
@@ -195,15 +197,12 @@ class App extends Component {
     render () {
         return (
             <span>
-                <div className="row hcenter">
-                    <div className="col-xs-4">
-                        Route { isNaN(this.state.selectedRoute) ? '' : this.state.selectedRoute + 1 }
-                    </div>
-                    <div className="col-xs-4">
+                <div className="row header">
+                    <div className="col-xs-6">
                         {this.renderRouteSelection()}
                     </div>
-                     <div className="col-xs-4">
-                        <Link to="/settings"><i className="fa fa-cog fa-2x" aria-hidden="true" /></Link>
+                     <div className="col-xs-6">
+                        <Link className="pull-right headerright" to="/settings"><i className="fa fa-cog fa-2x" aria-hidden="true" /></Link>
                     </div>
                 </div>
                 <div ref="mapCanvas" className="content" />
