@@ -111,21 +111,17 @@ class App extends Component {
         }
         const selectedRouteLabel = "Route" + (isNaN(this.state.selectedRoute) ? '' : this.state.selectedRoute + 1);
         return (
-            <div className="btn-group headerleft">
-                <button type="button" className="btn btn-info">{selectedRouteLabel}</button>
-                <button type="button" className="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span className="caret" />
-                    <span className="sr-only">Toggle Dropdown</span>
-                </button>
-                    <ul className="dropdown-menu dropdownright" aria-labelledby="routeSelection">
-                        {
-                            this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
-                                const label = "Route " + (routeIndex + 1);
-                                return (<li key={label} onClick={this.showRoute.bind(this, routeIndex)}>{label}</li>);
-                            }, this)
-                        }
-                    </ul>
-            </div>
+            <li className="dropdown">
+                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{selectedRouteLabel} <span className="caret" /></a>
+                <ul className="dropdown-menu">
+                    {
+                        this.state.routeCalculationResult.routes.map(function oneRoute (route, routeIndex) {
+                            const label = "Route " + (routeIndex + 1);
+                            return (<li key={label} onClick={this.showRoute.bind(this, routeIndex)}>{label}</li>);
+                        }, this)
+                    }
+                </ul>
+            </li>
         );
     }
 
@@ -194,20 +190,52 @@ class App extends Component {
         });
     }
 
+    renderHeader () {
+        return (
+            <nav className="navbar navbar-default">
+                <div className="container-fluid">
+                    <div className="navbar-header">
+                    <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span className="sr-only">Navigatie</span>
+                        <span className="icon-bar" />
+                        <span className="icon-bar" />
+                        <span className="icon-bar" />
+                    </button>
+                    <a className="navbar-brand" href="#">Kaart</a>
+                    </div>
+                    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul className="nav navbar-nav navbar-left">
+                            {this.renderRouteSelection()}
+                        </ul>
+                        <ul className="nav navbar-nav navbar-right">
+                            <li>
+                                <Link to="/settings"><i className="fa fa-cog fa-2x" aria-hidden="true" /></Link>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        );
+    }
+
+    renderFooter () {
+        return (
+            <footer className="footer">
+                <div className="container">
+                        {this.renderRouteInfo()}
+                </div>
+            </footer>
+        );
+    }
+
     render () {
         return (
             <span>
-                <div className="row header">
-                    <div className="col-xs-6">
-                        {this.renderRouteSelection()}
-                    </div>
-                     <div className="col-xs-6">
-                        <Link className="pull-right headerright" to="/settings"><i className="fa fa-cog fa-2x" aria-hidden="true" /></Link>
-                    </div>
+                <div className="container-fluid">
+                    {this.renderHeader()}
+                    <div ref="mapCanvas" className="content" />
+                     {this.renderFooter()}
                 </div>
-                <div ref="mapCanvas" className="content" />
-                <div className="clear"/>
-                {this.renderRouteInfo()}
             </span>
         );
     }
