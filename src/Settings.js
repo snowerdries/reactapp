@@ -52,15 +52,35 @@ class Settings extends Component {
         this.setState({ isStopAtSchoolToggled: value });
     }
 
+    renderHeader () {
+        return (
+            <nav className="navbar navbar-default">
+                <div className="container-fluid">
+                    <div className="navbar-header">
+                    <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span className="sr-only">Navigatie</span>
+                        <span className="icon-bar" />
+                        <span className="icon-bar" />
+                        <span className="icon-bar" />
+                    </button>
+                    <a className="navbar-brand" href="#">Settings</a>
+                    </div>
+                    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul className="nav navbar-nav navbar-right">
+                            <li>
+                                <Link to="/"><i className="fa fa-long-arrow-left fa-2x" aria-hidden="true" /></Link>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        );
+    }
+
     render () {
         return (
             <span>
-                    <div className="row header">
-                        <div className="col-xs-6" ><span className="label label-info">Settings</span></div>
-                        <div className="col-xs-6">
-                            <Link className="pull-right headerright" to="/"><i className="fa fa-long-arrow-left fa-2x" aria-hidden="true" /></Link>
-                        </div>
-                    </div>
+                    {this.renderHeader()}
                     <div className="content settingscontent">
                         <div className="row">
                             <div className="col-xs-6">
